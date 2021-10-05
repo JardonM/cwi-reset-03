@@ -12,7 +12,7 @@ public class ItensPorQuantidade {
             return pao;
         }
         if (item.equals("torta")) {
-            return torta;
+            return torta * 16;
         }
         if (item.equals("sanduiche")) {
             return sanduiche;
@@ -29,10 +29,10 @@ public class ItensPorQuantidade {
 
     public static void baixaDeEstoque (String item, int quantidade) {
         if (item.equals("pao")) {
-            pao -= quantidade;
+            pao -= (quantidade * 60);
         }
         if (item.equals("torta")) {
-            torta -= quantidade;
+            torta = (torta * 16) - quantidade;
         }
         if (item.equals("sanduiche")) {
            sanduiche -= quantidade;
@@ -43,6 +43,7 @@ public class ItensPorQuantidade {
         if (item.equals("cafe")) {
             cafe -= quantidade;
         }
+
     }
 
 

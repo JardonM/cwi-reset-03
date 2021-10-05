@@ -8,11 +8,11 @@ public class Registradora {
 
 //        terceiroBug();
 
-//        quartoBug();
+ //       quartoBug();
 
 //        quintoBug();
 //
-//        sextoBug();
+        sextoBug();
     }
 
     private static double registrarItem(String item, int quantidade) {
@@ -33,11 +33,10 @@ public class Registradora {
 
         }
         if (ItensPorQuantidade.itensEmEstoque(item) < quantidade) {
-            System.out.println("Quantidade em estoque menor que a solicitada, temos " + ItensPorQuantidade.itensEmEstoque(item) + " " + item + " em estoque.");
-            quantidade = ItensPorQuantidade.itensEmEstoque(item);
+            ReposicaoFornecedor.reporItem(item);
         }
-        ItensPorQuantidade.baixaDeEstoque(item, quantidade);
         double precoItem = RelacaoPesoPreco.retornaPrecoProduto(item, quantidade);
+        ItensPorQuantidade.baixaDeEstoque(item, quantidade);
         return precoItem;
     }
 
