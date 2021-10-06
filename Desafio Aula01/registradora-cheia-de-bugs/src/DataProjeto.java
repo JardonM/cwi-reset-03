@@ -34,9 +34,9 @@ public class DataProjeto {
     }
 
     private DataProjeto(boolean diaUtil, int hora, int minuto) {
-        this.diaUtil = diaUtil;
-        this.hora = hora;
-        this.minuto = minuto;
+        DataProjeto.diaUtil = diaUtil;
+        DataProjeto.hora = hora;
+        DataProjeto.minuto = minuto;
     }
 
     public static boolean cozinhaEmFuncionamento() {
