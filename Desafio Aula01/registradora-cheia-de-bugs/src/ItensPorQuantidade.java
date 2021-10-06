@@ -6,10 +6,10 @@ public class ItensPorQuantidade {
     static int leite = 20;
     static int cafe = 20;
 
-    public static int itensEmEstoque (String item) {
+    public static int itensEmEstoque (String item) { //Retorna a quantidade disponível em estoque
 
         if (item.equals("pao")) {
-            return pao;
+            return pao / 60;
         }
         if (item.equals("torta")) {
             return torta * 16;
@@ -27,7 +27,7 @@ public class ItensPorQuantidade {
         return 0;
     }
 
-    public static void baixaDeEstoque (String item, int quantidade) {
+    public static void baixaDeEstoque (String item, int quantidade) { //Retira do estoque a quantia que foi vendida ao cliente
         if (item.equals("pao")) {
             pao -= (quantidade * 60);
         }
@@ -42,6 +42,19 @@ public class ItensPorQuantidade {
         }
         if (item.equals("cafe")) {
             cafe -= quantidade;
+        }
+        if (QuantidadeMinimaItem.precisaReposicao(item)) { //Verifica após a venda se o estoque precisa de reposição
+            if ("pao".equals(item) || "sanduiche".equals(item) || "torta".equals(item)) {
+                if (!DataProjeto.cozinhaEmFuncionamento()) {
+                    System.out.println("Cozinha fechada!");
+                } else {
+                    ReposicaoCozinha.reporItem(item);
+                }
+            }
+
+            if ("leite".equals(item) || "cafe".equals(item)) {
+                ReposicaoFornecedor.reporItem(item);
+            }
         }
 
     }

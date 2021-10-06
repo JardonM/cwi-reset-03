@@ -22,6 +22,9 @@ public class RelacaoPesoPreco {
         if ("sanduiche".equals(item)) {
             precoTotal = 4.5 * qtd;
         }
+        if (precoTotal < 0) {
+            precoTotal = 0;
+        };
 
         return precoTotal;
     }

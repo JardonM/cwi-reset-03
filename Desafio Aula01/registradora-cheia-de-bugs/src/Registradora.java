@@ -6,22 +6,22 @@ public class Registradora {
 
 //        segundoBug();
 
-//        terceiroBug();
+ //       terceiroBug();
 
- //       quartoBug();
+//        quartoBug();
 
 //        quintoBug();
-//
+
         sextoBug();
     }
 
     private static double registrarItem(String item, int quantidade) {
+        int quantidadeEstoque = ItensPorQuantidade.itensEmEstoque(item);
         if (QuantidadeMinimaItem.precisaReposicao(item)) {
             if ("pao".equals(item) || "sanduiche".equals(item) || "torta".equals(item)) {
                 if (!DataProjeto.cozinhaEmFuncionamento()) {
-                    System.out.println("Cozinha fechada!");
-                    System.out.println("Quantidade em estoque menor que a solicitada, temos " + ItensPorQuantidade.itensEmEstoque(item) + " " + item + " em estoque.");
-                    quantidade = ItensPorQuantidade.itensEmEstoque(item);
+                    System.out.println("Quantidade em estoque menor que a solicitada, temos " + quantidadeEstoque + " " + item + " em estoque.");
+                    quantidade = quantidadeEstoque;
                 } else {
                     ReposicaoCozinha.reporItem(item);
                 }
@@ -32,8 +32,8 @@ public class Registradora {
             }
 
         }
-        if (ItensPorQuantidade.itensEmEstoque(item) < quantidade) {
-            ReposicaoFornecedor.reporItem(item);
+        if (quantidadeEstoque < quantidade) { //Verifica se a quantia em estoque é menor que a solicitada pelo cliente
+            ReposicaoFornecedor.reporItem(item);                    //mesmo sendo maior que a quantidade minima
         }
         double precoItem = RelacaoPesoPreco.retornaPrecoProduto(item, quantidade);
         ItensPorQuantidade.baixaDeEstoque(item, quantidade);
