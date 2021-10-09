@@ -21,6 +21,6 @@ public class Diretor {
         System.out.println("Nome: " + this.nome + ".");
         System.out.println("Idade: " + this.idade + ".");
         System.out.println("Quantidade de filmes dirigidos: " + this.quantFilmesDirigidos + ".");
-        System.out.println("Genero: " + this.genero + ".");
+        System.out.println("Genero: " + this.genero.getNome() + ".");
     }
 }
