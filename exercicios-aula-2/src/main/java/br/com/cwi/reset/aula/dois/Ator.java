@@ -1,10 +1,9 @@
 package br.com.cwi.reset.aula.dois;
 
-public class Ator {
-    private String nome;
-    private Integer idade;
+public class Ator extends Pessoa{
+
     private Integer oscar;
-    private Genero genero;
+
 
     public Ator(String nome, Integer idade, Integer oscar, Genero genero) {
         this.nome = nome;
@@ -13,10 +12,4 @@ public class Ator {
         this.genero = genero;
     }
 
-    public void imprimirAtor() {
-        System.out.println("Nome: " + this.nome + ".");
-        System.out.println("Idade: " + this.idade + ".");
-        System.out.println("Numero de Oscar: " + this.oscar + ".");
-        System.out.println("Genero: " + this.genero.getNome() + ".");
-    }
 }

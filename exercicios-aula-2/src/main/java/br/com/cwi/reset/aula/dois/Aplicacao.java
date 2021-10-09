@@ -12,13 +12,13 @@ public class Aplicacao {
         filme1.reproduzirFilme();
         filme2.reproduzirFilme();
 
-        diretor1.imprimirDiretor();
 
         Ator ator1 = new Ator ("Atorinho", 22, 1, Genero.MASCULINO);
         Ator atora = new Ator ("Atriza", 30, 6, Genero.NAO_BINARIO);
 
-        ator1.imprimirAtor();
-        atora.imprimirAtor();
+        ator1.imprimir();
+        atora.imprimir();
+        diretor1.imprimir();
 
     }
 }
