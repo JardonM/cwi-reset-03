@@ -10,4 +10,8 @@ public enum Genero {
     Genero(String nome) {
         this.nome = nome;
     }
+
+    public String getNome() {
+        return nome;
+    }
 }

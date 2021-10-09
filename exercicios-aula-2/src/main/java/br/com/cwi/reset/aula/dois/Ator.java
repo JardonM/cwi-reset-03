@@ -17,6 +17,6 @@ public class Ator {
         System.out.println("Nome: " + this.nome + ".");
         System.out.println("Idade: " + this.idade + ".");
         System.out.println("Numero de Oscar: " + this.oscar + ".");
-        System.out.println("Genero: " + this.genero + ".");
+        System.out.println("Genero: " + this.genero.getNome() + ".");
     }
 }
