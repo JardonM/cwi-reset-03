@@ -7,10 +7,9 @@ public class Diretor extends Pessoa{
 
 
     public Diretor(String nome, Integer idade, Integer quantFilmesDirigidos, Genero genero) {
-        this.nome = nome;
-        this.idade = idade;
+        super(nome, idade, genero);
         this.quantFilmesDirigidos = quantFilmesDirigidos;
-        this.genero = genero;
+
     }
 
     public String getNome() {

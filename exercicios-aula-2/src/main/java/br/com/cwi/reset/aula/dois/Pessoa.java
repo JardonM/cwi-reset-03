@@ -5,6 +5,11 @@ public class Pessoa {
     protected Integer idade;
     protected Genero genero;
 
+    public Pessoa(String nome, Integer idade, Genero genero) {
+        this.nome = nome;
+        this.idade = idade;
+        this.genero = genero;
+    }
 
     public void imprimir() {
         System.out.println("Nome: " + this.nome + ".");
