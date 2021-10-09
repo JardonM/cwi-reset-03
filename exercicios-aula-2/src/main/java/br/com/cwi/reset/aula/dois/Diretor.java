@@ -2,10 +2,10 @@ package br.com.cwi.reset.aula.dois;
 
 public class Diretor {
     private String nome;
-    private int idade;
-    private int quantFilmesDirigidos;
+    private Integer idade;
+    private Integer quantFilmesDirigidos;
 
-    public Diretor(String nome, int idade, int quantFilmesDirigidos) {
+    public Diretor(String nome, Integer idade, Integer quantFilmesDirigidos) {
         this.nome = nome;
         this.idade = idade;
         this.quantFilmesDirigidos = quantFilmesDirigidos;

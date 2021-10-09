@@ -3,12 +3,12 @@ package br.com.cwi.reset.aula.dois;
 public class Filme {
     private String nome;
     private String descricao;
-    private int duracao;
-    private String anoLancamento;
+    private Integer duracao;
+    private Integer anoLancamento;
     private double avaliacao;
     private Diretor diretorFilme;
 
-    public Filme (String nome, String descricao, int duracao, String anoLancamento, double avaliacao, Diretor diretorFilme) {
+    public Filme (String nome, String descricao, Integer duracao, Integer anoLancamento, double avaliacao, Diretor diretorFilme) {
         this.nome = nome;
         this.descricao = descricao;
         this.duracao = duracao;
