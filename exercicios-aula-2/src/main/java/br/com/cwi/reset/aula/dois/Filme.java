@@ -24,5 +24,12 @@ public class Filme {
         System.out.println("Diretor: " + this.diretorFilme.getNome() + ".");
     }
 
+    public void avaliacaoValida () throws AvaliacaoForaDoPadraoException {
+        if (this.avaliacao < 1 || this.avaliacao > 5) {
+            throw new AvaliacaoForaDoPadraoException();
+        }
+    }
+
+
 
 }

@@ -1,19 +1,33 @@
 package br.com.cwi.reset.aula.dois;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 public class Pessoa {
     protected String nome;
-    protected Integer idade;
+    protected LocalDate dataNasc;
     protected Genero genero;
 
-    public Pessoa(String nome, Integer idade, Genero genero) {
+
+    public Pessoa(String nome, LocalDate dataNasc, Genero genero) {
         this.nome = nome;
-        this.idade = idade;
+        this.dataNasc = dataNasc;
         this.genero = genero;
     }
 
+    public int calcularIdade() {
+        LocalDateTime dataAtual = LocalDateTime.now();
+        int idade = dataAtual.getYear() - this.dataNasc.getYear();
+        return idade;
+    }
+
+
+
     public void imprimir() {
         System.out.println("Nome: " + this.nome + ".");
-        System.out.println("Idade: " + this.idade + ".");
+        System.out.println("Idade: " + this.calcularIdade() + ".");
         System.out.println("Genero: " + this.genero.getNome() + ".");
     }
 }
