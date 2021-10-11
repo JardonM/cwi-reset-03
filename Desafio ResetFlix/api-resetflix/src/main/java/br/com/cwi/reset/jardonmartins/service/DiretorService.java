@@ -63,8 +63,10 @@ public class DiretorService {
     }
 
     public Diretor consultarDiretor(Integer id) throws DiretorException {
-        if (id == null) {
-            throw new DiretorException("Campo obrigatório não informado. Favor informar o campo id.");
+        try {
+            verificarID(id);
+        } catch (DiretorException exception) {
+            System.out.println(exception.getMessage());
         }
         List<Diretor> diretores = fakeDatabase.recuperaDiretores();
         List<Diretor> diretorEncontrado = new ArrayList<Diretor>();
@@ -77,6 +79,12 @@ public class DiretorService {
             throw new DiretorException("Nenhum diretor encontrado com o parâmetro id=" + id + ", favor verifique os parâmetros informados.");
         }
         return diretorEncontrado.get(0);
+    }
+
+    private void verificarID(Integer id) throws  DiretorException {
+        if (id == null) {
+            throw new DiretorException("Campo obrigatório não informado. Favor informar o campo id.");
+        }
     }
 
     private void verificarNome(String nome) throws DiretorException {
