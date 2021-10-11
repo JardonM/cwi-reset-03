@@ -48,7 +48,7 @@ public class DiretorService {
         List<Diretor> diretores = listarDiretores();
         List<Diretor> diretoresPorNome = new ArrayList<Diretor>();
         for (Diretor diretor : diretores) {
-            if(diretor.getNome().equalsIgnoreCase(nome)) {
+            if(diretor.getNome().toLowerCase().contains(nome.toLowerCase())) {
                 diretoresPorNome.add(diretor);
             }
         }
@@ -90,7 +90,7 @@ public class DiretorService {
 
     private void verificarNascimento(LocalDate dataNasc) throws DiretorException {
         LocalDate dataAtual = LocalDate.now();
-        if (dataAtual.isAfter(dataNasc)) {
+        if (dataNasc.isAfter(dataAtual)) {
             throw new DiretorException("Não é possível cadastrar diretores não nascidos.");
         }
     }
