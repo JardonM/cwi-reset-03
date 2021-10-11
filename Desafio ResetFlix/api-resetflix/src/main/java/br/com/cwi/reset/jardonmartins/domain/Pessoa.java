@@ -7,7 +7,7 @@ public abstract class Pessoa {
     private Integer id;
     private String nome;
     private LocalDate dataNascimento;
-    private LocalDate anoInicioAtividade;
+    private Integer anoInicioAtividade;
 
     public int calcularIdade() {
         LocalDateTime dataAtual = LocalDateTime.now();
@@ -15,7 +15,7 @@ public abstract class Pessoa {
         return idade;
     }
 
-    public Pessoa(Integer id, String nome, LocalDate dataNascimento, LocalDate anoInicioAtividade) {
+    public Pessoa(Integer id, String nome, LocalDate dataNascimento, Integer anoInicioAtividade) {
         this.id = id;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
@@ -46,11 +46,11 @@ public abstract class Pessoa {
         this.dataNascimento = dataNascimento;
     }
 
-    public LocalDate getAnoInicioAtividade() {
+    public Integer getAnoInicioAtividade() {
         return anoInicioAtividade;
     }
 
-    public void setAnoInicioAtividade(LocalDate anoInicioAtividade) {
+    public void setAnoInicioAtividade(Integer anoInicioAtividade) {
         this.anoInicioAtividade = anoInicioAtividade;
     }
 }

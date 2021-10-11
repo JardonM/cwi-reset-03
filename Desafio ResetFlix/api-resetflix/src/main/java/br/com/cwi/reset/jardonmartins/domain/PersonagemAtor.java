@@ -5,9 +5,10 @@ import java.time.LocalDate;
 public class PersonagemAtor extends Ator{
     private Ator ator;
     private String descricaoPersonagem;
-    TipoAtuacao tipoAtuacao;
+    private TipoAtuacao tipoAtuacao;
 
-    public PersonagemAtor(Integer id, String nome, LocalDate dataNascimento, LocalDate anoInicioAtividade) {
-        super(id, nome, dataNascimento, anoInicioAtividade);
+
+    public PersonagemAtor(Integer id, String nome, LocalDate dataNascimento, Integer anoInicioAtividade, StatusCarreira statusCarreira) {
+        super(id, nome, dataNascimento, anoInicioAtividade, statusCarreira);
     }
 }
