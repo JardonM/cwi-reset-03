@@ -1,4 +1,7 @@
-package br.com.cwi.reset.jardonmartins;
+package br.com.cwi.reset.jardonmartins.repository;
+
+import br.com.cwi.reset.jardonmartins.domain.Ator;
+import br.com.cwi.reset.jardonmartins.domain.Diretor;
 
 import java.util.ArrayList;
 import java.util.List;

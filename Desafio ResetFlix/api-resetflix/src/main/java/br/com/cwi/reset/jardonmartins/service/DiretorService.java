@@ -1,4 +1,6 @@
-package br.com.cwi.reset.jardonmartins;
+package br.com.cwi.reset.jardonmartins.service;
+
+import br.com.cwi.reset.jardonmartins.repository.FakeDatabase;
 
 public class DiretorService {
 

@@ -1,4 +1,4 @@
-package br.com.cwi.reset.jardonmartins;
+package br.com.cwi.reset.jardonmartins.domain;
 
 import java.time.LocalDate;
 
