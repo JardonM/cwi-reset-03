@@ -41,7 +41,7 @@ public class AtorService {
         if (atores.size() == 0){
             throw new AtorException("Nenhum ator cadastrado, favor cadastrar atores.");
         }
-        List<Ator> atoresEmAtividade = new ArrayList<Ator>();
+        List<Ator> atoresEmAtividade = new ArrayList<>();
         for (Ator ator : atores) {
             if (ator.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE)) {
                 atoresEmAtividade.add(ator);
@@ -52,9 +52,9 @@ public class AtorService {
 
     public List<Ator> listarAtoresEmAtividade(String nome) throws AtorException {
         List<Ator> atoresEmAtividade = listarAtoresEmAtividade();
-        List<Ator> atoresEmAtividadePorNome = new ArrayList<Ator>();
+        List<Ator> atoresEmAtividadePorNome = new ArrayList<>();
         for (Ator ator : atoresEmAtividade) {
-            if(ator.getNome().equalsIgnoreCase(nome)) {
+            if(ator.getNome().toLowerCase().contains(nome.toLowerCase())) {
                 atoresEmAtividadePorNome.add(ator);
             }
         }
@@ -73,7 +73,7 @@ public class AtorService {
             throw new AtorException("Campo obrigatório não informado. Favor informar o campo id.");
         }
         List<Ator> atores = fakeDatabase.recuperaAtores();
-        List<Ator> atorEncontrado = new ArrayList<Ator>();
+        List<Ator> atorEncontrado = new ArrayList<>();
         for(Ator ator : atores) {
             if(Objects.equals(ator.getId(), id)) {
                 atorEncontrado.add(ator);
