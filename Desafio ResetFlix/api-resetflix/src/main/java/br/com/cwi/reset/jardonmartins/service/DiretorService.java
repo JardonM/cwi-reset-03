@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class DiretorService {
     private Integer id;
@@ -46,12 +47,7 @@ public class DiretorService {
 
     public List<Diretor> listarDiretores(String nome) throws DiretorException {
         List<Diretor> diretores = listarDiretores();
-        List<Diretor> diretoresPorNome = new ArrayList<Diretor>();
-        for (Diretor diretor : diretores) {
-            if(diretor.getNome().toLowerCase().contains(nome.toLowerCase())) {
-                diretoresPorNome.add(diretor);
-            }
-        }
+        List<Diretor> diretoresPorNome = diretores.stream().filter(e -> e.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
         if (diretoresPorNome.size() == 0) {
             throw new DiretorException("Nenhum diretor encontrado com o filtro " + nome + ", favor informar outro filtro.");
         }
@@ -69,12 +65,7 @@ public class DiretorService {
             System.out.println(exception.getMessage());
         }
         List<Diretor> diretores = fakeDatabase.recuperaDiretores();
-        List<Diretor> diretorEncontrado = new ArrayList<Diretor>();
-        for(Diretor diretor : diretores) {
-            if(Objects.equals(diretor.getId(), id)) {
-                diretorEncontrado.add(diretor);
-            }
-        }
+        List<Diretor> diretorEncontrado = diretores.stream().filter(e -> Objects.equals(e.getId(), id)).collect(Collectors.toList());
         if(diretorEncontrado.size() == 0) {
             throw new DiretorException("Nenhum diretor encontrado com o parâmetro id=" + id + ", favor verifique os parâmetros informados.");
         }

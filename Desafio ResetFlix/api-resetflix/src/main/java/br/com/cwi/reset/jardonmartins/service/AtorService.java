@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class AtorService {
 
@@ -41,23 +42,13 @@ public class AtorService {
         if (atores.size() == 0){
             throw new AtorException("Nenhum ator cadastrado, favor cadastrar atores.");
         }
-        List<Ator> atoresEmAtividade = new ArrayList<>();
-        for (Ator ator : atores) {
-            if (ator.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE)) {
-                atoresEmAtividade.add(ator);
-            }
-        }
+        List<Ator> atoresEmAtividade = atores.stream().filter(e -> e.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE)).collect(Collectors.toList());
         return atoresEmAtividade;
     }
 
     public List<Ator> listarAtoresEmAtividade(String nome) throws AtorException {
         List<Ator> atoresEmAtividade = listarAtoresEmAtividade();
-        List<Ator> atoresEmAtividadePorNome = new ArrayList<>();
-        for (Ator ator : atoresEmAtividade) {
-            if(ator.getNome().toLowerCase().contains(nome.toLowerCase())) {
-                atoresEmAtividadePorNome.add(ator);
-            }
-        }
+        List<Ator> atoresEmAtividadePorNome = atoresEmAtividade.stream().filter(e -> e.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
         if (atoresEmAtividadePorNome.size() == 0) {
             throw new AtorException("Nenhum ator encontrado com o filtro " + nome + ", favor informar outro filtro.");
         }
@@ -75,12 +66,7 @@ public class AtorService {
             System.out.println(exception.getMessage());
         }
         List<Ator> atores = fakeDatabase.recuperaAtores();
-        List<Ator> atorEncontrado = new ArrayList<>();
-        for(Ator ator : atores) {
-            if(Objects.equals(ator.getId(), id)) {
-                atorEncontrado.add(ator);
-            }
-        }
+        List<Ator> atorEncontrado = atores.stream().filter(e -> Objects.equals(e.getId(), id)).collect(Collectors.toList());
         if(atorEncontrado.size() == 0) {
             throw new AtorException("Nenhum ator encontrado com o parâmetro id=" + id + ", favor verifique os parâmetros informados.");
         }
