@@ -1,10 +1,7 @@
 package br.com.cwi.reset.jardonmartins;
 
 import br.com.cwi.reset.jardonmartins.domain.Ator;
-import br.com.cwi.reset.jardonmartins.domain.Diretor;
 import br.com.cwi.reset.jardonmartins.domain.StatusCarreira;
-import br.com.cwi.reset.jardonmartins.exception.AtorException;
-import br.com.cwi.reset.jardonmartins.exception.DiretorException;
 import br.com.cwi.reset.jardonmartins.repository.FakeDatabase;
 import br.com.cwi.reset.jardonmartins.request.AtorRequest;
 import br.com.cwi.reset.jardonmartins.request.DiretorRequest;
@@ -13,12 +10,11 @@ import br.com.cwi.reset.jardonmartins.service.DiretorService;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Aplicacao {
 
-    public static void main(String[] args) throws AtorException, DiretorException {
+    public static void main(String[] args) throws Exception {
         FakeDatabase fakeDatabase = new FakeDatabase();
 
         AtorService atorService = new AtorService(fakeDatabase);
