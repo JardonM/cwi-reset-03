@@ -1,11 +1,13 @@
 package br.com.cwi.reset.jardonmartins.request;
 
-import br.com.cwi.reset.jardonmartins.domain.StatusCarreira;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 
 public class DiretorRequest {
     private String nome;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
     private Integer anoInicioAtividade;
 
@@ -26,5 +28,17 @@ public class DiretorRequest {
 
     public Integer getAnoInicioAtividade() {
         return anoInicioAtividade;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public void setAnoInicioAtividade(Integer anoInicioAtividade) {
+        this.anoInicioAtividade = anoInicioAtividade;
     }
 }

@@ -1,11 +1,14 @@
 package br.com.cwi.reset.jardonmartins.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public abstract class Pessoa {
     private Integer id;
     private String nome;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
     private Integer anoInicioAtividade;
 
