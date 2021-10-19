@@ -2,13 +2,38 @@ package br.com.cwi.reset.jardonmartins.domain;
 
 import java.time.LocalDate;
 
-public class PersonagemAtor extends Ator{
+public class PersonagemAtor {
+    private Integer id;
     private Ator ator;
+    private String nomePersonagem;
     private String descricaoPersonagem;
     private TipoAtuacao tipoAtuacao;
 
+    public PersonagemAtor(Integer id, Ator ator, String nomePersonagem, String descricaoPersonagem, TipoAtuacao tipoAtuacao) {
+        this.id = id;
+        this.ator = ator;
+        this.nomePersonagem = nomePersonagem;
+        this.descricaoPersonagem = descricaoPersonagem;
+        this.tipoAtuacao = tipoAtuacao;
+    }
 
-    public PersonagemAtor(Integer id, String nome, LocalDate dataNascimento, Integer anoInicioAtividade, StatusCarreira statusCarreira) {
-        super(id, nome, dataNascimento, anoInicioAtividade, statusCarreira);
+    public Integer getId() {
+        return id;
+    }
+
+    public Ator getAtor() {
+        return ator;
+    }
+
+    public String getNomePersonagem() {
+        return nomePersonagem;
+    }
+
+    public String getDescricaoPersonagem() {
+        return descricaoPersonagem;
+    }
+
+    public TipoAtuacao getTipoAtuacao() {
+        return tipoAtuacao;
     }
 }

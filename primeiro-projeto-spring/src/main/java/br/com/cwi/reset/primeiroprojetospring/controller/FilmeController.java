@@ -76,8 +76,8 @@ public class FilmeController {
     public Filme atualizarFilme(@RequestBody Filme filme) {
         Filme filmeEncontrado = verificarNome(filme.getNome());
         if(filmeEncontrado != null) {
-            filmes.remove(filmeEncontrado);
-            filmes.add(filme);
+            this.filmes.remove(filmeEncontrado);
+            this.filmes.add(filme);
         }
         return  filme;
     }
@@ -86,7 +86,7 @@ public class FilmeController {
     public void deletarFilme(@PathVariable String nome) {
         Filme filmeEncontrado = verificarNome(nome);
         if(filmeEncontrado != null) {
-            filmes.remove(filmeEncontrado);
+            this.filmes.remove(filmeEncontrado);
         }
     }
 
