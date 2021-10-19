@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class FiltroNomeNaoEncontrado extends Exception {
 
     public FiltroNomeNaoEncontrado(String tipo, String paramentro) {
-        super(String.format("%s não encontrato com o filtro %s, favor informar outro filtro.", tipo, paramentro));
+        super(String.format("%s não encontrado com o filtro %s, favor informar outro filtro.", tipo, paramentro));
     }
 }

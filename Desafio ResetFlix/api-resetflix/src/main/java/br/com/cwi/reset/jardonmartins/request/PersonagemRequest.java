@@ -4,18 +4,18 @@ import br.com.cwi.reset.jardonmartins.domain.Ator;
 import br.com.cwi.reset.jardonmartins.domain.TipoAtuacao;
 
 public class PersonagemRequest {
-    private Ator ator;
+    private Integer idAtor;
     private String nomePersonagem;
     private String descricaoPersonagem;
     private TipoAtuacao tipoAtuacao;
 
 
-    public Ator getAtor() {
-        return ator;
+    public Integer getIdAtor() {
+        return idAtor;
     }
 
-    public void setAtor(Ator ator) {
-        this.ator = ator;
+    public void setIdAtor(Integer idAtor) {
+        this.idAtor = idAtor;
     }
 
     public String getNomePersonagem() {

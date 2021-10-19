@@ -1,5 +1,8 @@
 package br.com.cwi.reset.jardonmartins.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Genero {
     ACAO("Ação"),
     AVENTURA("Aventura"),

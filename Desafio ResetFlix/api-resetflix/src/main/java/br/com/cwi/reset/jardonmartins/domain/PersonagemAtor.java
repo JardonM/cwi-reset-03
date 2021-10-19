@@ -17,6 +17,7 @@ public class PersonagemAtor {
         this.tipoAtuacao = tipoAtuacao;
     }
 
+
     public Integer getId() {
         return id;
     }

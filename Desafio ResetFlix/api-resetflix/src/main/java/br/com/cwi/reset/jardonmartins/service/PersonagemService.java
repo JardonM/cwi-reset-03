@@ -24,13 +24,17 @@ public class PersonagemService {
     }
 
     public void criarPersonagem(PersonagemRequest personagemRequest) throws Exception {
-        verificarNome(personagemRequest.getNomePersonagem());
-        verificaAtor(personagemRequest.getAtor());
-        verificaDescricao(personagemRequest.getDescricaoPersonagem());
+        verificaPersonagem(personagemRequest);
         verificaTipoAtuacao(personagemRequest.getTipoAtuacao());
         this.id++;
-        PersonagemAtor personagemAtor = new PersonagemAtor(this.id, personagemRequest.getAtor(), personagemRequest.getNomePersonagem(), personagemRequest.getDescricaoPersonagem(), personagemRequest.getTipoAtuacao());
+        PersonagemAtor personagemAtor = new PersonagemAtor(this.id, atorService.consultarAtor(personagemRequest.getIdAtor()), personagemRequest.getNomePersonagem(), personagemRequest.getDescricaoPersonagem(), personagemRequest.getTipoAtuacao());
         fakeDatabase.persistePersonagem(personagemAtor);
+    }
+
+    public void verificaPersonagem(PersonagemRequest personagemRequest) throws Exception {
+        verificarNome(personagemRequest.getNomePersonagem());
+        verificaAtor(personagemRequest.getIdAtor());
+        verificaDescricao(personagemRequest.getDescricaoPersonagem());
     }
 
     public List<PersonagemAtor> listarPersonagens() throws Exception {
@@ -84,10 +88,10 @@ public class PersonagemService {
         }
     }
 
-    private void verificaAtor(Ator ator) throws Exception {
+    private void verificaAtor(Integer id) throws Exception {
         List<Ator> atores = atorService.consultarAtores();
-        List<Ator> existeAtor = atores.stream().filter(e -> e.getNome().toLowerCase().equals(ator.getNome())).collect(Collectors.toList());
-        if(existeAtor.size() == 0) {
+        List<Ator> existeAtor = atores.stream().filter(e -> e.getId().equals(id)).collect(Collectors.toList());
+        if(existeAtor.isEmpty()) {
             throw new ListaVaziaException(TipoDominioException.ATOR.getSingular(), TipoDominioException.ATOR.getPlural());
         }
     }

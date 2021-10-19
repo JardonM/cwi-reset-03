@@ -13,13 +13,13 @@ public class FilmeRequest {
     private String nome;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate anoLancamento;
+    private LocalDate dataLancamento;
 
     private String capaFilme;
     private List<Genero> generos;
-    private Diretor diretor;
-    private Estudio estudio;
-    private List<PersonagemAtor> personagens;
+    private Integer idDiretor;
+    private Integer idEstudio;
+    private List<PersonagemRequest> personagens;
     private String resumo;
 
     public String getNome() {
@@ -30,12 +30,12 @@ public class FilmeRequest {
         this.nome = nome;
     }
 
-    public LocalDate getAnoLancamento() {
-        return anoLancamento;
+    public LocalDate getDataLancamento() {
+        return dataLancamento;
     }
 
-    public void setAnoLancamento(LocalDate anoLancamento) {
-        this.anoLancamento = anoLancamento;
+    public void setDataLancamento(LocalDate dataLancamento) {
+        this.dataLancamento = dataLancamento;
     }
 
     public String getCapaFilme() {
@@ -54,27 +54,27 @@ public class FilmeRequest {
         this.generos = generos;
     }
 
-    public Diretor getDiretor() {
-        return diretor;
+    public Integer getIdDiretor() {
+        return idDiretor;
     }
 
-    public void setDiretor(Diretor diretor) {
-        this.diretor = diretor;
+    public void setIdDiretor(Integer idDiretor) {
+        this.idDiretor = idDiretor;
     }
 
-    public Estudio getEstudio() {
-        return estudio;
+    public Integer getIdEstudio() {
+        return idEstudio;
     }
 
-    public void setEstudio(Estudio estudio) {
-        this.estudio = estudio;
+    public void setIdEstudio(Integer idEstudio) {
+        this.idEstudio = idEstudio;
     }
 
-    public List<PersonagemAtor> getPersonagens() {
+    public List<PersonagemRequest> getPersonagens() {
         return personagens;
     }
 
-    public void setPersonagens(List<PersonagemAtor> personagens) {
+    public void setPersonagens(List<PersonagemRequest> personagens) {
         this.personagens = personagens;
     }
 
