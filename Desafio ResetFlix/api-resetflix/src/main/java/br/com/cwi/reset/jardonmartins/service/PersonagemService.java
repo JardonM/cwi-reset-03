@@ -25,17 +25,12 @@ public class PersonagemService {
 
     public void criarPersonagem(PersonagemRequest personagemRequest) throws Exception {
         verificaPersonagem(personagemRequest);
-        verificaTipoAtuacao(personagemRequest.getTipoAtuacao());
         this.id++;
         PersonagemAtor personagemAtor = new PersonagemAtor(this.id, atorService.consultarAtor(personagemRequest.getIdAtor()), personagemRequest.getNomePersonagem(), personagemRequest.getDescricaoPersonagem(), personagemRequest.getTipoAtuacao());
         fakeDatabase.persistePersonagem(personagemAtor);
     }
 
-    public void verificaPersonagem(PersonagemRequest personagemRequest) throws Exception {
-        verificarNome(personagemRequest.getNomePersonagem());
-        verificaAtor(personagemRequest.getIdAtor());
-        verificaDescricao(personagemRequest.getDescricaoPersonagem());
-    }
+
 
     public List<PersonagemAtor> listarPersonagens() throws Exception {
         List<PersonagemAtor> personagens = fakeDatabase.recuperaPersonagens();
@@ -103,6 +98,12 @@ public class PersonagemService {
         if(!descricao.contains(" ")) {
             throw new DescricaoInvalidaException(TipoDominioException.PERSONAGEM.getSingular());
         }
+    }
+    public void verificaPersonagem(PersonagemRequest personagemRequest) throws Exception {
+        verificarNome(personagemRequest.getNomePersonagem());
+        verificaAtor(personagemRequest.getIdAtor());
+        verificaDescricao(personagemRequest.getDescricaoPersonagem());
+        verificaTipoAtuacao(personagemRequest.getTipoAtuacao());
     }
 
     private void verificaTipoAtuacao(TipoAtuacao tipoAtuacao) throws Exception {

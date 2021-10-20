@@ -25,6 +25,26 @@ public class FilmeController {
         return filmeService.listarFilmes();
     }
 
+    @GetMapping("/filme/{nome}")
+    public List<Filme> listarFilmesPorNome(@PathVariable String nome) throws Exception {
+        return filmeService.listarFilmesPorNome(nome);
+    }
+
+    @GetMapping("/diretor/{nome}")
+    public List<Filme> listarFilmesPorDiretor(@PathVariable String nome) throws Exception {
+        return filmeService.listarFilmesPorDiretor(nome);
+    }
+
+    @GetMapping("/personagem/{nome}")
+    public List<Filme> listarFilmesPorPersonagem(@PathVariable String nome) throws Exception {
+        return filmeService.listarFilmesPorPersonagem(nome);
+    }
+
+    @GetMapping("/ator/{nome}")
+    public List<Filme> listarFilmesPorAtor(@PathVariable String nome) throws Exception {
+        return filmeService.listarFilmesPorAtor(nome);
+    }
+
     @PostMapping("/cadastrar")
     @ResponseStatus(HttpStatus.CREATED)
     public void criarFilme(@RequestBody FilmeRequest filmeRequest) throws Exception {

@@ -8,7 +8,6 @@ import br.com.cwi.reset.jardonmartins.request.PersonagemRequest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +38,7 @@ public class FilmeService {
         verificarEstudio(filmeRequest.getIdEstudio());
         verificaResumo(filmeRequest.getResumo());
         verificarPersonagens(filmeRequest.getPersonagens());
+        verificarFilmeRepetido(filmeRequest);
         criarPersonagensDoFilme(filmeRequest.getPersonagens());
         this.id++;
         Filme filme = new Filme (this.id, filmeRequest.getNome(), filmeRequest.getDataLancamento(), filmeRequest.getCapaFilme(), filmeRequest.getGeneros(), diretorService.consultarDiretor(filmeRequest.getIdDiretor()), estudioService.consultarEstudios(filmeRequest.getIdEstudio()), listarPersonagensDoFilme(filmeRequest.getPersonagens()) , filmeRequest.getResumo());
@@ -53,7 +53,55 @@ public class FilmeService {
         return filmes;
     }
 
-    public List<Filme> 
+    public List<Filme> listarFilmesPorNome(String nome) throws Exception {
+        List<Filme> filmes = listarFilmes();
+        List<Filme> filmesEncontrados = filmes.stream().filter(e -> e.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
+        if(filmesEncontrados.isEmpty()){
+            throw new NenhumFilmeEncontradoException("nome do filme");
+        }
+        return filmesEncontrados;
+    }
+
+    public List<Filme> listarFilmesPorDiretor(String nome) throws Exception {
+        List<Filme> filmes = listarFilmes();
+        List<Filme> filmesEncontrados = filmes.stream().filter(e -> e.getDiretor().getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
+        if(filmesEncontrados.isEmpty()){
+            throw new NenhumFilmeEncontradoException("diretor");
+        }
+        return filmesEncontrados;
+    }
+
+    public List<Filme> listarFilmesPorPersonagem(String nome) throws Exception {
+        List<Filme> filmes = listarFilmes();
+        List<Filme> filmesEncontrados = new ArrayList<Filme>();
+        for(Filme filme : filmes) {
+            for(PersonagemAtor personagem : filme.getPersonagens()){
+                if(personagem.getNomePersonagem().equalsIgnoreCase(nome)){
+                    filmesEncontrados.add(filme);
+                }
+            }
+        }
+        if(filmesEncontrados.isEmpty()){
+            throw new NenhumFilmeEncontradoException("personagem");
+        }
+        return filmesEncontrados;
+    }
+
+    public List<Filme> listarFilmesPorAtor(String nome) throws Exception {
+        List<Filme> filmes = listarFilmes();
+        List<Filme> filmesEncontrados = new ArrayList<Filme>();
+        for(Filme filme : filmes) {
+            for(PersonagemAtor personagem : filme.getPersonagens()){
+                if(personagem.getAtor().getNome().equalsIgnoreCase(nome)){
+                    filmesEncontrados.add(filme);
+                }
+            }
+        }
+        if(filmesEncontrados.isEmpty()){
+            throw new NenhumFilmeEncontradoException("ator");
+        }
+        return filmesEncontrados;
+    }
 
     private void criarPersonagensDoFilme(List<PersonagemRequest> personagemRequests) throws Exception {
         for(PersonagemRequest personagemRequest : personagemRequests) {
@@ -76,6 +124,9 @@ public class FilmeService {
     }
 
     private void verificarDataLanc(LocalDate dataLanc) throws Exception {
+        if(dataLanc == null) {
+            throw new AnoLancamentoInvalidoException(TipoDominioException.FILME.getSingular());
+        }
         LocalDate atual = LocalDate.now();
         if (dataLanc.isAfter(atual)) {
             throw new AnoLancamentoInvalidoException(TipoDominioException.FILME.getSingular());
@@ -89,6 +140,9 @@ public class FilmeService {
     }
 
     private void verificarDiretor(Integer id) throws Exception {
+        if(id == null) {
+            throw new CampoNaoInformadoException("id do diretor");
+        }
         List<Diretor> diretores = diretorService.consultarDiretores();
         List<Diretor> existeDiretor = diretores.stream().filter(e -> e.getId().equals(id)).collect(Collectors.toList());
         if (existeDiretor.isEmpty()) {
@@ -96,7 +150,10 @@ public class FilmeService {
         }
     }
 
-    private void verificarGeneroRepetido(List<Genero> generos) throws GeneroRepetidoException {
+    private void verificarGeneroRepetido(List<Genero> generos) throws Exception {
+        if(generos.isEmpty()){
+            throw new GeneroNaoInformadoException();
+        }
         List<Genero> recebeGenero = new ArrayList<Genero>();
         for (Genero genero : generos) {
             if (recebeGenero.contains(genero)) {
@@ -107,6 +164,9 @@ public class FilmeService {
     }
 
     private void verificarEstudio(Integer id) throws Exception {
+        if(id == null) {
+            throw new CampoNaoInformadoException("id do estudio");
+        }
         List<Estudio> estudios = estudioService.consultarEstudios();
         List<Estudio> existeEstudio = estudios.stream().filter(e -> e.getId().equals(id)).collect(Collectors.toList());
         if (existeEstudio.isEmpty()) {
@@ -124,8 +184,23 @@ public class FilmeService {
     }
 
     private void verificarPersonagens(List<PersonagemRequest> personagens) throws Exception {
+        if(personagens.isEmpty()){
+            throw new ListaVaziaException(TipoDominioException.PERSONAGEM.getSingular(), TipoDominioException.PERSONAGEM.getPlural());
+        }
         for(PersonagemRequest personagem : personagens) {
             personagemService.verificaPersonagem(personagem);
+        }
+    }
+
+    private void verificarFilmeRepetido(FilmeRequest filmeRequest) throws Exception {
+        List<Filme> filmes = fakeDatabase.recuperaFilmes();
+        for(Filme filme : filmes) {
+            if((filme.getNome().equals(filmeRequest.getNome())) &&
+            (filme.getDiretor().getNome().equals(diretorService.consultarDiretor(filmeRequest.getIdDiretor()).getNome())) &&
+            (filme.getDataLancamento().equals(filmeRequest.getDataLancamento())))
+            {
+                throw new FilmeJaCadastradoException();
+            }
         }
     }
 
