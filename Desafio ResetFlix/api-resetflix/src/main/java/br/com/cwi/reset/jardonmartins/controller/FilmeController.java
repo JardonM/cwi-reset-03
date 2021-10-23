@@ -21,28 +21,12 @@ public class FilmeController {
     }
 
     @GetMapping
-    public List<Filme> listarFilmes() throws Exception {
-        return filmeService.listarFilmes();
-    }
-
-    @GetMapping("/filme/{nome}")
-    public List<Filme> listarFilmesPorNome(@PathVariable String nome) throws Exception {
-        return filmeService.listarFilmesPorNome(nome);
-    }
-
-    @GetMapping("/diretor/{nome}")
-    public List<Filme> listarFilmesPorDiretor(@PathVariable String nome) throws Exception {
-        return filmeService.listarFilmesPorDiretor(nome);
-    }
-
-    @GetMapping("/personagem/{nome}")
-    public List<Filme> listarFilmesPorPersonagem(@PathVariable String nome) throws Exception {
-        return filmeService.listarFilmesPorPersonagem(nome);
-    }
-
-    @GetMapping("/ator/{nome}")
-    public List<Filme> listarFilmesPorAtor(@PathVariable String nome) throws Exception {
-        return filmeService.listarFilmesPorAtor(nome);
+    public List<Filme> consultarFilmes(
+            @RequestParam String nomeFilme,
+            @RequestParam String nomeDiretor,
+            @RequestParam String nomePersonagem,
+            @RequestParam String nomeAtor) throws Exception {
+        return filmeService.consultarFilmes(nomeFilme, nomeDiretor, nomePersonagem, nomeAtor);
     }
 
     @PostMapping("/cadastrar")

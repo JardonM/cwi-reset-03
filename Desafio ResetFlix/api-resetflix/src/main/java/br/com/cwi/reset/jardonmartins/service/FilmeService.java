@@ -53,26 +53,52 @@ public class FilmeService {
         return filmes;
     }
 
-    public List<Filme> listarFilmesPorNome(String nome) throws Exception {
+    public List<Filme> consultarFilmes(String nomeFilme,
+                                    String nomeDiretor,
+                                    String nomePersonagem,
+                                    String nomeAtor) throws Exception{
         List<Filme> filmes = listarFilmes();
+        List<Filme> filtrarNomePersonagem = listarFilmesPorPersonagem(nomePersonagem, filmes);
+        List<Filme> filtrarNomeAtor = listarFilmesPorAtor(nomeAtor, filtrarNomePersonagem);
+        List<Filme> filtrarNomeDiretor = listarFilmesPorDiretor(nomeDiretor, filtrarNomeAtor);
+        List<Filme> filtroFinal = listarFilmesPorNome(nomeFilme, filtrarNomeDiretor);
+        if(filtroFinal.isEmpty()){
+            throw new NenhumFilmeEncontradoException(String.format(
+                    "Filme não encontrado com os filtros nomeFilme=%s, nomeDiretor=%s, nomePersonagem=%s, nomeAtor=%s, favor informar outros filtros.",
+                    nomeFilme,
+                    nomeDiretor,
+                    nomePersonagem,
+                    nomeAtor));
+        }
+        return filtroFinal;
+    }
+
+    public List<Filme> listarFilmesPorNome(String nome, List<Filme> filmes) throws Exception {
+        if(nome == null) {
+            return filmes;
+        }
         List<Filme> filmesEncontrados = filmes.stream().filter(e -> e.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
         if(filmesEncontrados.isEmpty()){
-            throw new NenhumFilmeEncontradoException("nome do filme");
+            return filmes;
         }
         return filmesEncontrados;
     }
 
-    public List<Filme> listarFilmesPorDiretor(String nome) throws Exception {
-        List<Filme> filmes = listarFilmes();
+    public List<Filme> listarFilmesPorDiretor(String nome, List<Filme> filmes) throws Exception {
+        if(nome == null) {
+            return filmes;
+        }
         List<Filme> filmesEncontrados = filmes.stream().filter(e -> e.getDiretor().getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
         if(filmesEncontrados.isEmpty()){
-            throw new NenhumFilmeEncontradoException("diretor");
+            return filmes;
         }
         return filmesEncontrados;
     }
 
-    public List<Filme> listarFilmesPorPersonagem(String nome) throws Exception {
-        List<Filme> filmes = listarFilmes();
+    public List<Filme> listarFilmesPorPersonagem(String nome, List<Filme> filmes) throws Exception {
+        if(nome == null) {
+            return filmes;
+        }
         List<Filme> filmesEncontrados = new ArrayList<Filme>();
         for(Filme filme : filmes) {
             for(PersonagemAtor personagem : filme.getPersonagens()){
@@ -82,13 +108,15 @@ public class FilmeService {
             }
         }
         if(filmesEncontrados.isEmpty()){
-            throw new NenhumFilmeEncontradoException("personagem");
+            return filmes;
         }
         return filmesEncontrados;
     }
 
-    public List<Filme> listarFilmesPorAtor(String nome) throws Exception {
-        List<Filme> filmes = listarFilmes();
+    public List<Filme> listarFilmesPorAtor(String nome, List<Filme> filmes) throws Exception {
+        if(nome == null) {
+            return filmes;
+        }
         List<Filme> filmesEncontrados = new ArrayList<Filme>();
         for(Filme filme : filmes) {
             for(PersonagemAtor personagem : filme.getPersonagens()){
@@ -98,7 +126,7 @@ public class FilmeService {
             }
         }
         if(filmesEncontrados.isEmpty()){
-            throw new NenhumFilmeEncontradoException("ator");
+            return filmes;
         }
         return filmesEncontrados;
     }

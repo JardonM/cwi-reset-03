@@ -99,6 +99,7 @@ public class PersonagemService {
             throw new DescricaoInvalidaException(TipoDominioException.PERSONAGEM.getSingular());
         }
     }
+    //TODO verificar se personagem ja foi cadastrado para o mesmo ator.
     public void verificaPersonagem(PersonagemRequest personagemRequest) throws Exception {
         verificarNome(personagemRequest.getNomePersonagem());
         verificaAtor(personagemRequest.getIdAtor());
