@@ -3,6 +3,7 @@ package br.com.cwi.reset.projeto1.controller;
 import br.com.cwi.reset.projeto1.domain.Pet;
 import br.com.cwi.reset.projeto1.exception.PetJaExistenteException;
 import br.com.cwi.reset.projeto1.service.PetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/pet")
 public class PetController {
-
-    private PetService petService = new PetService();
+    @Autowired
+    private PetService petService;
 
     @GetMapping
     public List<Pet> getPet() {

@@ -5,11 +5,15 @@ import br.com.cwi.reset.projeto1.domain.Pet;
 import br.com.cwi.reset.projeto1.exception.PetJaExistenteException;
 import br.com.cwi.reset.projeto1.exception.PetNaoExistenteException;
 import br.com.cwi.reset.projeto1.repository.PetRepository;
+import br.com.cwi.reset.projeto1.repository.PetRepositoryImp;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class PetService {
-    private PetRepository repository = new PetRepository();
+    @Autowired
+    private PetRepository repository;
 
     public Pet salvar(Pet pet) throws PetJaExistenteException {
         Pet petJaExistente = repository.findByNome(pet.getNome());

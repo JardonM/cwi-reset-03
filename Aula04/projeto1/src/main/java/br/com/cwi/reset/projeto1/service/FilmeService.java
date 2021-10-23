@@ -39,7 +39,7 @@ public class FilmeService {
 
     public Filme atualizar(Filme filme) throws FilmeNaoExistenteException {
         Filme filmeJaCadastrado = buscarPorNome(filme.getNome());
-        if (filme == null) {
+        if (filmeJaCadastrado == null) {
             throw new FilmeNaoExistenteException("Filme com o nome " + filme.getNome() + " não existe");
         }
         return repository.update(filme);
