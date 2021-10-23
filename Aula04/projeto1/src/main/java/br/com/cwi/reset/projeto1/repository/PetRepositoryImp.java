@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-public class PetRepositoryImp  implements PetRepository{
+
+public class PetRepositoryImp{
     private List<Pet> pets = new ArrayList<>();
 
     public Pet findByNome(String nome) {

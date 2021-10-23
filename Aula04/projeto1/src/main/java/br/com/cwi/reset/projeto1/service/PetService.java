@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class PetService {
+
     @Autowired
     private PetRepository repository;
 
@@ -49,6 +50,6 @@ public class PetService {
         if (petJaCadastrado == null) {
             throw new PetNaoExistenteException("Pet com o nome " + pet.getNome() + " não existe");
         }
-        return repository.update(pet);
+        return repository.save(pet);
     }
 }
