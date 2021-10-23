@@ -17,16 +17,19 @@ public class PetService {
         if (petJaExistente != null) {
             throw new PetJaExistenteException("Pet com o nome " + pet.getNome() + " já existe");
         }
-        repository.save(pet);
-        return pet;
+        return repository.save(pet);
     }
 
     public List<Pet> listarTodos() {
         return repository.findAll();
     }
 
-    public Pet buscarPorNome(String nome) {
-        return repository.findByNome(nome);
+    public Pet buscarPorNome(String nome) throws Exception {
+        Pet pet =  repository.findByNome(nome);
+        if(pet == null) {
+            throw new PetNaoExistenteException("Pet com o nome " + nome + " não existe");
+        }
+        return pet;
     }
 
     public void deletar(String nomePet) throws Exception {
@@ -39,7 +42,7 @@ public class PetService {
 
     public Pet atualizar(Pet pet) throws Exception {
         Pet petJaCadastrado = buscarPorNome(pet.getNome());
-        if (pet == null) {
+        if (petJaCadastrado == null) {
             throw new PetNaoExistenteException("Pet com o nome " + pet.getNome() + " não existe");
         }
         return repository.update(pet);

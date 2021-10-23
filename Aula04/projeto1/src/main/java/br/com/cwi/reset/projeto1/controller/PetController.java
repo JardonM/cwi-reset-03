@@ -3,6 +3,7 @@ package br.com.cwi.reset.projeto1.controller;
 import br.com.cwi.reset.projeto1.domain.Pet;
 import br.com.cwi.reset.projeto1.exception.PetJaExistenteException;
 import br.com.cwi.reset.projeto1.service.PetService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -19,29 +20,23 @@ public class PetController {
     }
 
     @GetMapping("/{nome}")
-    public ResponseEntity<Pet> getById(@PathVariable String nome) {
-        Pet pet = buscarPetPeloNome(nome);
-
-        if (pet == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(pet);
+    public Pet getByNome(@PathVariable String nome) throws Exception {
+        return petService.buscarPorNome(nome);
     }
 
-    private Pet buscarPetPeloNome(String nome) {
+    private Pet buscarPetPeloNome(String nome) throws Exception {
         return petService.buscarPorNome(nome);
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Pet cadastrarPet(@RequestBody Pet pet) throws PetJaExistenteException {
-        petService.salvar(pet);
-        return pet;
+        return petService.salvar(pet);
     }
 
     @PutMapping
-    public void atualizarPet(@RequestBody Pet pet) throws Exception {
-        petService.atualizar(pet);
+    public Pet atualizarPet(@RequestBody Pet pet) throws Exception {
+        return petService.atualizar(pet);
     }
 
     @DeleteMapping("/{nome}")
