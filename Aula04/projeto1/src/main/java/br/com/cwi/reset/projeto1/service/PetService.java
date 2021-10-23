@@ -1,12 +1,9 @@
 package br.com.cwi.reset.projeto1.service;
 
-import br.com.cwi.reset.projeto1.domain.Filme;
+
 import br.com.cwi.reset.projeto1.domain.Pet;
-import br.com.cwi.reset.projeto1.exception.FilmeJaExistenteException;
-import br.com.cwi.reset.projeto1.exception.FilmeNaoExistenteException;
 import br.com.cwi.reset.projeto1.exception.PetJaExistenteException;
 import br.com.cwi.reset.projeto1.exception.PetNaoExistenteException;
-import br.com.cwi.reset.projeto1.repository.FilmeRepository;
 import br.com.cwi.reset.projeto1.repository.PetRepository;
 
 import java.util.List;
