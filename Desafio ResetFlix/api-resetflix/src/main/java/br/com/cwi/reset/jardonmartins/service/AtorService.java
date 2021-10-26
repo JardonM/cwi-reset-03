@@ -3,55 +3,66 @@ package br.com.cwi.reset.jardonmartins.service;
 import br.com.cwi.reset.jardonmartins.domain.Ator;
 import br.com.cwi.reset.jardonmartins.domain.StatusCarreira;
 import br.com.cwi.reset.jardonmartins.exception.*;
+import br.com.cwi.reset.jardonmartins.repository.AtorRepository;
 import br.com.cwi.reset.jardonmartins.repository.FakeDatabase;
 import br.com.cwi.reset.jardonmartins.request.AtorRequest;
+import br.com.cwi.reset.jardonmartins.response.AtorEmAtividade;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Service
 public class AtorService {
 
-    private Integer id;
+    @Autowired
+    private AtorRepository repository;
 
-    private FakeDatabase fakeDatabase;
-
-    public AtorService(FakeDatabase fakeDatabase) {
-        this.fakeDatabase = fakeDatabase;
-        this.id = 0;
-    }
 
     public void criarAtor(AtorRequest atorRequest) throws Exception {
         verificarNome(atorRequest.getNome());
         verificarNascimento(atorRequest.getDataNascimento());
         verificarAnoInicioAtv(atorRequest.getAnoInicioAtividade(), atorRequest.getDataNascimento());
         verificarAtorRepetido(atorRequest);
-        this.id++;
-        Ator ator = new Ator(this.id, atorRequest.getNome(), atorRequest.getDataNascimento(), atorRequest.getAnoInicioAtividade(), atorRequest.getStatusCarreira());
-        fakeDatabase.persisteAtor(ator);
+        Ator ator = new Ator(atorRequest.getNome(), atorRequest.getDataNascimento(),  atorRequest.getStatusCarreira(), atorRequest.getAnoInicioAtividade());
+        repository.save(ator);
     }
 
-    public List<Ator> listarAtoresEmAtividade() throws Exception {
-        List<Ator> atores = fakeDatabase.recuperaAtores();
-        if (atores.size() == 0){
-            throw new ListaVaziaException(TipoDominioException.ATOR.getSingular(), TipoDominioException.ATOR.getPlural());
+    public List<AtorEmAtividade> listarAtoresEmAtividade(String filtroNome) throws Exception {
+        final List<Ator> atoresCadastrados = consultarAtores();
+        final List<AtorEmAtividade> retorno = new ArrayList<>();
+        if (filtroNome != null) {
+            for (Ator ator : atoresCadastrados) {
+                final boolean containsFilter = ator.getNome().toLowerCase(Locale.ROOT).contains(filtroNome.toLowerCase(Locale.ROOT));
+                final boolean emAtividade = StatusCarreira.EM_ATIVIDADE.equals(ator.getStatusCarreira());
+                if (containsFilter && emAtividade) {
+                    retorno.add(new AtorEmAtividade(ator.getId(), ator.getNome(), ator.getDataNascimento()));
+                }
+            }
+        } else {
+            for (Ator ator : atoresCadastrados) {
+                final boolean emAtividade = StatusCarreira.EM_ATIVIDADE.equals(ator.getStatusCarreira());
+                if (emAtividade) {
+                    retorno.add(new AtorEmAtividade(ator.getId(), ator.getNome(), ator.getDataNascimento()));
+                }
+            }
         }
-        return atores.stream().filter(e -> e.getStatusCarreira().equals(StatusCarreira.EM_ATIVIDADE)).collect(Collectors.toList());
-    }
 
-    public List<Ator> listarAtoresEmAtividade(String nome) throws Exception {
-        List<Ator> atoresEmAtividade = listarAtoresEmAtividade();
-        List<Ator> atoresEmAtividadePorNome = atoresEmAtividade.stream().filter(e -> e.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
-        if (atoresEmAtividadePorNome.size() == 0) {
-            throw new FiltroNomeNaoEncontrado("Ator", nome);
+        if (retorno.isEmpty()) {
+            throw new FiltroNomeNaoEncontrado("Ator", filtroNome);
         }
-        return atoresEmAtividadePorNome;
+
+        return retorno;
     }
 
     public List<Ator> consultarAtores() throws Exception {
-        List<Ator> atores = fakeDatabase.recuperaAtores();
-        if(atores.size() == 0) {
+        List<Ator> atores = repository.findAll();
+        if(atores.isEmpty()) {
             throw new ListaVaziaException(TipoDominioException.ATOR.getSingular(), TipoDominioException.ATOR.getPlural());
         }
         return atores;
@@ -59,12 +70,36 @@ public class AtorService {
 
     public Ator consultarAtor(Integer id) throws Exception {
         verificaID(id);
-        List<Ator> atores = fakeDatabase.recuperaAtores();
+        List<Ator> atores = consultarAtores();
         List<Ator> atorEncontrado = atores.stream().filter(e -> Objects.equals(e.getId(), id)).collect(Collectors.toList());
         if(atorEncontrado.size() == 0) {
             throw new ConsultaIdInvalidoException(TipoDominioException.ATOR.getSingular(), id);
         }
         return atorEncontrado.get(0);
+    }
+
+    public void atualizarAtor(Integer id, AtorRequest atorRequest) throws Exception {
+        verificaID(id);
+        List<Ator> atores = repository.findAll();
+        for(Ator ator : atores) {
+            if(ator.getId().equals(id)){
+                ator.setNome(atorRequest.getNome());
+                ator.setAnoInicioAtividade(atorRequest.getAnoInicioAtividade());
+                ator.setDataNascimento(atorRequest.getDataNascimento());
+                ator.setStatusCarreira(atorRequest.getStatusCarreira());
+                repository.save(ator);
+            }
+        }
+    }
+
+    public void removerAtor(Integer id) throws Exception {
+        verificaID(id);
+        List<Ator> atores = repository.findAll();
+        for(Ator ator : atores) {
+            if(ator.getId().equals(id)) {
+                repository.delete(ator);
+            }
+        }
     }
 
     private void verificaID(Integer id) throws Exception {
@@ -74,9 +109,6 @@ public class AtorService {
     }
 
     private void verificarNome(String nome) throws Exception {
-        if ((nome == null) || (nome.isEmpty()) || nome.trim().isEmpty()) {
-            throw new NomeNaoInformadoException();
-        }
         if(!nome.contains(" ")) {
             throw new NomeSobrenomeObrigatorioException(TipoDominioException.ATOR.getSingular());
         }
@@ -96,7 +128,7 @@ public class AtorService {
     }
 
     private void verificarAtorRepetido(AtorRequest atorRequest) throws Exception {
-        List<Ator> atores = fakeDatabase.recuperaAtores();
+        List<Ator> atores = repository.findAll();
         for(Ator ator : atores) {
             if(ator.getNome().equalsIgnoreCase(atorRequest.getNome())) {
                 throw new CadastroDuplicadoException(TipoDominioException.ATOR.getSingular(), atorRequest.getNome());

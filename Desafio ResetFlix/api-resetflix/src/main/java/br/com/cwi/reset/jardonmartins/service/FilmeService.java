@@ -2,51 +2,53 @@ package br.com.cwi.reset.jardonmartins.service;
 
 import br.com.cwi.reset.jardonmartins.domain.*;
 import br.com.cwi.reset.jardonmartins.exception.*;
+import br.com.cwi.reset.jardonmartins.repository.EstudioRepository;
 import br.com.cwi.reset.jardonmartins.repository.FakeDatabase;
+import br.com.cwi.reset.jardonmartins.repository.FilmeRepository;
 import br.com.cwi.reset.jardonmartins.request.FilmeRequest;
 import br.com.cwi.reset.jardonmartins.request.PersonagemRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class FilmeService {
 
-    private Integer id;
-    private FakeDatabase fakeDatabase;
+
+    @Autowired
+    private FilmeRepository repository;
+    @Autowired
     private AtorService atorService;
+    @Autowired
     private DiretorService diretorService;
+    @Autowired
     private EstudioService estudioService;
+    @Autowired
     private PersonagemService personagemService;
 
-    public FilmeService(FakeDatabase fakeDatabase) {
-        this.fakeDatabase = fakeDatabase;
-        this.atorService = new AtorService(FakeDatabase.getInstance());
-        this.diretorService = new DiretorService(FakeDatabase.getInstance());
-        this.estudioService = new EstudioService(FakeDatabase.getInstance());
-        this.personagemService = new PersonagemService(FakeDatabase.getInstance());
-        this.id = 0;
-    }
+
 
     public void criarFilme(FilmeRequest filmeRequest) throws Exception {
         verificarNome(filmeRequest.getNome());
-        verificarDataLanc(filmeRequest.getDataLancamento());
+        verificarDataLanc(filmeRequest.getAnoLancamento());
         verificarCapaFilme(filmeRequest.getCapaFilme());
         verificarDiretor(filmeRequest.getIdDiretor());
-        verificarGeneroRepetido(filmeRequest.getGeneros());
+        verificarGenero(filmeRequest.getGeneros());
         verificarEstudio(filmeRequest.getIdEstudio());
         verificaResumo(filmeRequest.getResumo());
         verificarPersonagens(filmeRequest.getPersonagens());
         verificarFilmeRepetido(filmeRequest);
         criarPersonagensDoFilme(filmeRequest.getPersonagens());
-        this.id++;
-        Filme filme = new Filme (this.id, filmeRequest.getNome(), filmeRequest.getDataLancamento(), filmeRequest.getCapaFilme(), filmeRequest.getGeneros(), diretorService.consultarDiretor(filmeRequest.getIdDiretor()), estudioService.consultarEstudios(filmeRequest.getIdEstudio()), listarPersonagensDoFilme(filmeRequest.getPersonagens()) , filmeRequest.getResumo());
-        fakeDatabase.persisteFilme(filme);
+        Filme filme = new Filme (filmeRequest.getNome(), filmeRequest.getAnoLancamento(), filmeRequest.getCapaFilme(), filmeRequest.getGeneros(),  estudioService.consultarEstudios(filmeRequest.getIdEstudio()), diretorService.consultarDiretor(filmeRequest.getIdDiretor()), listarPersonagensDoFilme(filmeRequest.getPersonagens()) , filmeRequest.getResumo());
+        repository.save(filme);
     }
 
     public List<Filme> listarFilmes() throws Exception {
-        List<Filme> filmes = fakeDatabase.recuperaFilmes();
+        List<Filme> filmes = repository.findAll();
         if(filmes.isEmpty()) {
             throw new ListaVaziaException(TipoDominioException.FILME.getSingular(), TipoDominioException.FILME.getPlural());
         }
@@ -145,18 +147,35 @@ public class FilmeService {
         return personagensDoFilme;
     }
 
+    public void removerFilme(Integer id) throws Exception {
+        verificaID(id);
+        List<Filme> filmes = repository.findAll();
+        for(Filme filme : filmes) {
+            if(filme.getId().equals(id)) {
+                List<PersonagemAtor> personagensParaDeletar = filme.getPersonagens();
+                personagemService.deletarPersonagens(personagensParaDeletar);
+                repository.delete(filme);
+            }
+        }
+    }
+    private void verificaID(Integer id) throws Exception {
+        if (id == null) {
+            throw new IdNaoInformado();
+        }
+    }
+
     private void verificarNome(String nome) throws Exception {
         if ((nome == null) || (nome.isEmpty()) || nome.trim().isEmpty()) {
             throw new NomeNaoInformadoException();
         }
     }
 
-    private void verificarDataLanc(LocalDate dataLanc) throws Exception {
-        if(dataLanc == null) {
+    private void verificarDataLanc(Integer anoLanc) throws Exception {
+        if(anoLanc == null) {
             throw new AnoLancamentoInvalidoException(TipoDominioException.FILME.getSingular());
         }
         LocalDate atual = LocalDate.now();
-        if (dataLanc.isAfter(atual)) {
+        if (anoLanc > atual.getYear()) {
             throw new AnoLancamentoInvalidoException(TipoDominioException.FILME.getSingular());
         }
     }
@@ -171,14 +190,14 @@ public class FilmeService {
         if(id == null) {
             throw new CampoNaoInformadoException("id do diretor");
         }
-        List<Diretor> diretores = diretorService.consultarDiretores();
+        List<Diretor> diretores = diretorService.listarDiretores();
         List<Diretor> existeDiretor = diretores.stream().filter(e -> e.getId().equals(id)).collect(Collectors.toList());
         if (existeDiretor.isEmpty()) {
             throw new ListaVaziaException(TipoDominioException.DIRETOR.getSingular(), TipoDominioException.DIRETOR.getPlural());
         }
     }
 
-    private void verificarGeneroRepetido(List<Genero> generos) throws Exception {
+    private void verificarGenero(List<Genero> generos) throws Exception {
         if(generos.isEmpty()){
             throw new GeneroNaoInformadoException();
         }
@@ -195,7 +214,7 @@ public class FilmeService {
         if(id == null) {
             throw new CampoNaoInformadoException("id do estudio");
         }
-        List<Estudio> estudios = estudioService.consultarEstudios();
+        List<Estudio> estudios = estudioService.listarEstudios();
         List<Estudio> existeEstudio = estudios.stream().filter(e -> e.getId().equals(id)).collect(Collectors.toList());
         if (existeEstudio.isEmpty()) {
             throw new ListaVaziaException(TipoDominioException.ESTUDIO.getSingular(), TipoDominioException.ESTUDIO.getPlural());
@@ -221,11 +240,11 @@ public class FilmeService {
     }
 
     private void verificarFilmeRepetido(FilmeRequest filmeRequest) throws Exception {
-        List<Filme> filmes = fakeDatabase.recuperaFilmes();
+        List<Filme> filmes = repository.findAll();
         for(Filme filme : filmes) {
             if((filme.getNome().equals(filmeRequest.getNome())) &&
             (filme.getDiretor().getNome().equals(diretorService.consultarDiretor(filmeRequest.getIdDiretor()).getNome())) &&
-            (filme.getDataLancamento().equals(filmeRequest.getDataLancamento())))
+            (filme.getAnoLancamento().equals(filmeRequest.getAnoLancamento())))
             {
                 throw new FilmeJaCadastradoException();
             }

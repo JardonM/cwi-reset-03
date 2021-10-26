@@ -3,13 +3,28 @@ package br.com.cwi.reset.jardonmartins.request;
 import br.com.cwi.reset.jardonmartins.domain.StatusAtividade;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class EstudioRequest {
+    @NotNull
+    @NotBlank
+    @NotEmpty
     private String nome;
+    @NotNull
+    @NotBlank
+    @NotEmpty
     private String descricao;
     @JsonFormat(pattern = "dd/MM/yyyy")
+    @NotNull
+    @NotBlank
+    @NotEmpty
     private LocalDate dataCriacao;
+    @NotNull
+    @NotBlank
+    @NotEmpty
     private StatusAtividade statusAtividade;
 
     public String getNome() {

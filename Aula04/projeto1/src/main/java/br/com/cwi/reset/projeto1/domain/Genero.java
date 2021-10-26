@@ -1,5 +1,7 @@
 package br.com.cwi.reset.projeto1.domain;
 
+
+
 public enum Genero {
     MASCULINO("Masculino"),
     FEMININO("Feminino"),

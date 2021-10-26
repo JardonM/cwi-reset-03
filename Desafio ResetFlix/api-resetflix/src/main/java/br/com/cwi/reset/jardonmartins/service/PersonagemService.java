@@ -5,35 +5,42 @@ import br.com.cwi.reset.jardonmartins.domain.PersonagemAtor;
 import br.com.cwi.reset.jardonmartins.domain.TipoAtuacao;
 import br.com.cwi.reset.jardonmartins.exception.*;
 import br.com.cwi.reset.jardonmartins.repository.FakeDatabase;
+import br.com.cwi.reset.jardonmartins.repository.PersonagemRepository;
 import br.com.cwi.reset.jardonmartins.request.PersonagemRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Service
 public class PersonagemService {
 
-    private Integer id;
-    private FakeDatabase fakeDatabase;
+    @Autowired
+    private PersonagemRepository repository;
+    @Autowired
     private AtorService atorService;
 
-    public PersonagemService(FakeDatabase fakeDatabase) {
-        this.fakeDatabase = fakeDatabase;
-        this.id = 0;
-        this.atorService = new AtorService(FakeDatabase.getInstance());
-    }
+
 
     public void criarPersonagem(PersonagemRequest personagemRequest) throws Exception {
         verificaPersonagem(personagemRequest);
-        this.id++;
-        PersonagemAtor personagemAtor = new PersonagemAtor(this.id, atorService.consultarAtor(personagemRequest.getIdAtor()), personagemRequest.getNomePersonagem(), personagemRequest.getDescricaoPersonagem(), personagemRequest.getTipoAtuacao());
-        fakeDatabase.persistePersonagem(personagemAtor);
+
+        PersonagemAtor personagemAtor = new PersonagemAtor(atorService.consultarAtor(personagemRequest.getIdAtor()), personagemRequest.getNomePersonagem(), personagemRequest.getDescricaoPersonagem(), personagemRequest.getTipoAtuacao());
+        repository.save(personagemAtor);
+    }
+
+    public void deletarPersonagens(List<PersonagemAtor> personagens) throws Exception {
+        for(PersonagemAtor personagem : personagens) {
+            repository.delete(personagem);
+        }
     }
 
 
 
     public List<PersonagemAtor> listarPersonagens() throws Exception {
-        List<PersonagemAtor> personagens = fakeDatabase.recuperaPersonagens();
+        List<PersonagemAtor> personagens = repository.findAll();
         if(personagens.size() == 0) {
             throw new ListaVaziaException(TipoDominioException.PERSONAGEM.getSingular(), TipoDominioException.PERSONAGEM.getPlural());
         }
@@ -99,12 +106,25 @@ public class PersonagemService {
             throw new DescricaoInvalidaException(TipoDominioException.PERSONAGEM.getSingular());
         }
     }
-    //TODO verificar se personagem ja foi cadastrado para o mesmo ator.
+
     public void verificaPersonagem(PersonagemRequest personagemRequest) throws Exception {
         verificarNome(personagemRequest.getNomePersonagem());
         verificaAtor(personagemRequest.getIdAtor());
         verificaDescricao(personagemRequest.getDescricaoPersonagem());
         verificaTipoAtuacao(personagemRequest.getTipoAtuacao());
+        verificaPersonagemRepetido(personagemRequest);
+    }
+
+    private void verificaPersonagemRepetido(PersonagemRequest personagemRequest) throws Exception {
+        List<PersonagemAtor> personagens = repository.findAll();
+        for(PersonagemAtor personagemAtor : personagens) {
+            if(personagemAtor.getAtor().getId().equals(personagemRequest.getIdAtor())) {
+                if(personagemAtor.getNomePersonagem().equals(personagemRequest.getNomePersonagem())) {
+                    throw new PersonagemJaCadastradoException("Ja existe um personagem com o nome " + personagemRequest.getNomePersonagem() + " com o id de ator " + personagemRequest.getIdAtor());
+                }
+
+            }
+        }
     }
 
     private void verificaTipoAtuacao(TipoAtuacao tipoAtuacao) throws Exception {

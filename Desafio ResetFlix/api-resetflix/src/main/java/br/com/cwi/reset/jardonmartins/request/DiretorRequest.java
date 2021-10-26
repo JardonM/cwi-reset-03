@@ -3,19 +3,27 @@ package br.com.cwi.reset.jardonmartins.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class DiretorRequest {
+    @NotNull
+    @NotBlank
+    @NotEmpty
     private String nome;
+    @NotNull
+    @NotBlank
+    @NotEmpty
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
+    @NotNull
+    @NotBlank
+    @NotEmpty
     private Integer anoInicioAtividade;
 
-//    public DiretorRequest(String nome, LocalDate dataNascimento, Integer anoInicioAtividade) {
-//        this.nome = nome;
-//        this.dataNascimento = dataNascimento;
-//        this.anoInicioAtividade = anoInicioAtividade;
-//    }
+
 
     public String getNome() {
         return nome;

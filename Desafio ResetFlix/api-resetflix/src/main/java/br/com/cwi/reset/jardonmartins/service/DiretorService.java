@@ -1,70 +1,107 @@
 package br.com.cwi.reset.jardonmartins.service;
 
 
+import br.com.cwi.reset.jardonmartins.domain.Ator;
 import br.com.cwi.reset.jardonmartins.domain.Diretor;
 import br.com.cwi.reset.jardonmartins.exception.*;
+import br.com.cwi.reset.jardonmartins.repository.DiretorRepository;
 import br.com.cwi.reset.jardonmartins.repository.FakeDatabase;
+import br.com.cwi.reset.jardonmartins.request.AtorRequest;
 import br.com.cwi.reset.jardonmartins.request.DiretorRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Service
 public class DiretorService {
-    private Integer id;
 
-    private FakeDatabase fakeDatabase;
+    @Autowired
+    private DiretorRepository repository;
 
-    public DiretorService(FakeDatabase fakeDatabase) {
-        this.fakeDatabase = fakeDatabase;
-        this.id = 0;
-    }
 
     public void cadastrarDiretor(DiretorRequest diretorRequest) throws Exception {
         verificarNome(diretorRequest.getNome());
         verificarNascimento(diretorRequest.getDataNascimento());
         verificarAnoInicioAtv(diretorRequest.getAnoInicioAtividade(), diretorRequest.getDataNascimento());
         verificarDiretorRepetido(diretorRequest);
-        this.id++;
-        Diretor diretor = new Diretor(this.id, diretorRequest.getNome(), diretorRequest.getDataNascimento(), diretorRequest.getAnoInicioAtividade());
-        fakeDatabase.persisteDiretor(diretor);
+        Diretor diretor = new Diretor(diretorRequest.getNome(), diretorRequest.getDataNascimento(), diretorRequest.getAnoInicioAtividade());
+        repository.save(diretor);
     }
 
     public List<Diretor> listarDiretores() throws Exception {
-        List<Diretor> diretores = fakeDatabase.recuperaDiretores();
-        if (diretores.size() == 0){
+        List<Diretor> diretores = repository.findAll();
+        if (diretores.isEmpty()){
             throw new ListaVaziaException(TipoDominioException.DIRETOR.getSingular(), TipoDominioException.DIRETOR.getPlural());
         }
         return diretores;
     }
 
     public List<Diretor> listarDiretores(String nome) throws Exception {
-        List<Diretor> diretores = listarDiretores();
-        List<Diretor> diretoresPorNome = diretores.stream().filter(e -> e.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
-        if (diretoresPorNome.size() == 0) {
-            throw new FiltroNomeNaoEncontrado("Diretor", nome);
-        }
-        return diretoresPorNome;
-    }
+        final List<Diretor> diretoresCadastrados = repository.findAll();
 
-    public List<Diretor> consultarDiretores() throws Exception {
-        List<Diretor> diretores = fakeDatabase.recuperaDiretores();
-        if(diretores.size() == 0) {
+        if (diretoresCadastrados.isEmpty()) {
             throw new ListaVaziaException(TipoDominioException.DIRETOR.getSingular(), TipoDominioException.DIRETOR.getPlural());
         }
-        return diretores;
+
+        final List<Diretor> retorno = new ArrayList<>();
+
+        if (nome != null) {
+            for (Diretor diretor : diretoresCadastrados) {
+                final boolean containsFilter = diretor.getNome().toLowerCase(Locale.ROOT).contains(nome.toLowerCase(Locale.ROOT));
+                if (containsFilter) {
+                    retorno.add(diretor);
+                }
+            }
+        } else {
+            retorno.addAll(diretoresCadastrados);
+        }
+
+        if (retorno.isEmpty()) {
+            throw new FiltroNomeNaoEncontrado("Diretor", nome);
+        }
+
+        return retorno;
     }
+
 
     public Diretor consultarDiretor(Integer id) throws Exception {
         verificarID(id);
-        List<Diretor> diretores = fakeDatabase.recuperaDiretores();
+        List<Diretor> diretores = listarDiretores();
         List<Diretor> diretorEncontrado = diretores.stream().filter(e -> Objects.equals(e.getId(), id)).collect(Collectors.toList());
         if (diretorEncontrado.size() == 0) {
             throw new ConsultaIdInvalidoException(TipoDominioException.DIRETOR.getSingular(), id);
         }
         return diretorEncontrado.get(0);
+    }
+
+    public void atualizarDiretor(Integer id, DiretorRequest diretorRequest) throws Exception {
+        verificarID(id);
+        List<Diretor> diretores = repository.findAll();
+        for(Diretor diretor : diretores) {
+            if(diretor.getId().equals(id)) {
+                diretor.setNome(diretorRequest.getNome());
+                diretor.setAnoInicioAtividade(diretorRequest.getAnoInicioAtividade());
+                diretor.setDataNascimento(diretorRequest.getDataNascimento());
+                repository.save(diretor);
+            }
+        }
+    }
+
+    public void removerDiretor(Integer id) throws Exception {
+        verificarID(id);
+        List<Diretor> diretores = repository.findAll();
+        for(Diretor diretor : diretores) {
+            if(diretor.getId().equals(id)) {
+                repository.delete(diretor);
+            }
+        }
     }
 
     private void verificarID(Integer id) throws  Exception {
@@ -96,7 +133,7 @@ public class DiretorService {
     }
 
     private void verificarDiretorRepetido(DiretorRequest diretorRequest) throws Exception {
-        List<Diretor> diretores = fakeDatabase.recuperaDiretores();
+        List<Diretor> diretores = repository.findAll();
         for(Diretor diretor : diretores) {
             if(diretor.getNome().equalsIgnoreCase(diretorRequest.getNome())) {
                 throw new CadastroDuplicadoException(TipoDominioException.DIRETOR.getSingular(), diretorRequest.getNome());
