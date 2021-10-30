@@ -1,6 +1,5 @@
 package br.com.cwi.reset.projeto1;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Exercicios1 {

@@ -5,12 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27355554-e9cf-41b0-8967-7db76b932284" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/projeto-1.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/cwi/reset/projeto1/Exercicios1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/cwi/reset/projeto1/Exercicios1.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -24,7 +33,63 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
+  </component>
+  <component name="RunManager" selected="JUnit.Exercicios1Test.mediaComListaVazia">
+    <configuration name="Exercicios1Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="projeto-1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.cwi.reset.projeto1.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.com.cwi.reset.projeto1" />
+      <option name="MAIN_CLASS_NAME" value="br.com.cwi.reset.projeto1.Exercicios1Test" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Exercicios1Test.mediaComListaVazia" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="projeto-1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.cwi.reset.projeto1.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.com.cwi.reset.projeto1" />
+      <option name="MAIN_CLASS_NAME" value="br.com.cwi.reset.projeto1.Exercicios1Test" />
+      <option name="METHOD_NAME" value="mediaComListaVazia" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Exercicios1Test.somaCom5InteirosPositivos" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="projeto-1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.cwi.reset.projeto1.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.com.cwi.reset.projeto1" />
+      <option name="MAIN_CLASS_NAME" value="br.com.cwi.reset.projeto1.Exercicios1Test" />
+      <option name="METHOD_NAME" value="somaCom5InteirosPositivos" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.Exercicios1Test.mediaComListaVazia" />
+        <item itemvalue="JUnit.Exercicios1Test" />
+        <item itemvalue="JUnit.Exercicios1Test.somaCom5InteirosPositivos" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
