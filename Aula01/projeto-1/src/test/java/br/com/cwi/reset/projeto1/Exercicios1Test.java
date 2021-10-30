@@ -2,6 +2,7 @@ package br.com.cwi.reset.projeto1;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -150,5 +151,35 @@ public class Exercicios1Test {
 
         Assertions.assertEquals(expected, result);
 
+    }
+
+    @Test
+    public void ordenarLista() throws ListaVaziaException {
+        List<Integer> numeros = Arrays.asList(5, 4, 3, 2, 1);
+
+        List<Integer> numerosEmOrdem = exercicios.ordenarLista(numeros);
+        int i = 1;
+        for(int numero : numerosEmOrdem) {
+            Assertions.assertEquals(i, numero);
+            i++;
+        }
+    }
+
+    @Test
+    public void ordenarListaVazia() throws ListaVaziaException {
+        List<Integer> listaVazia = new ArrayList<>();
+
+        Throwable exception = Assertions.assertThrows(ListaVaziaException.class, () -> exercicios.ordenarLista(listaVazia));
+        Assertions.assertEquals("Lista vazia", exception.getMessage());
+    }
+
+    @Test
+    public void ordenarListaNegativos() throws ListaVaziaException {
+        List<Integer> negativos = Arrays.asList(-8,-10, 5, 4, 1);
+        List<Integer> expected = Arrays.asList(-10, -8, 1, 4, 5);
+
+        List<Integer> negativosOrdenados = exercicios.ordenarLista(negativos);
+
+        Assertions.assertEquals(expected, negativosOrdenados);
     }
 }

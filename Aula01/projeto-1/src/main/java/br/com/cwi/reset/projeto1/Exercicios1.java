@@ -38,7 +38,10 @@ public class Exercicios1 {
         return invertido;
     }
 
-    public List<Integer> ordenarLista(List<Integer> numeros) {
+    public List<Integer> ordenarLista(List<Integer> numeros) throws ListaVaziaException {
+        if(numeros.size() == 0) {
+            throw new ListaVaziaException("Lista vazia");
+        }
         int aux;
         for (int i = 0; i < numeros.size() -1; i++) {
             for (int j = i + 1; j < numeros.size(); j++) {

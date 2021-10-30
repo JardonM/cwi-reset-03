@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="27355554-e9cf-41b0-8967-7db76b932284" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/cwi/reset/projeto1/Exercicios1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/cwi/reset/projeto1/Exercicios1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/cwi/reset/projeto1/TesteExercicios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/cwi/reset/projeto1/TesteExercicios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/cwi/reset/projeto1/Exercicios1Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/cwi/reset/projeto1/Exercicios1Test.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +25,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="1zC4OeUTpHBMiBQmsLqorYgknGa" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -34,8 +43,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunManager" selected="JUnit.Exercicios1Test.mediaComListaVazia">
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="br.com.cwi.reset.projeto1" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.Exercicios1Test.ordenarListaNegativos">
     <configuration name="Exercicios1Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="projeto-1" />
       <extension name="coverage">
@@ -51,7 +66,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Exercicios1Test.mediaComListaVazia" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Exercicios1Test.ordenarLista" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="projeto-1" />
       <extension name="coverage">
         <pattern>
@@ -61,13 +76,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="br.com.cwi.reset.projeto1" />
       <option name="MAIN_CLASS_NAME" value="br.com.cwi.reset.projeto1.Exercicios1Test" />
-      <option name="METHOD_NAME" value="mediaComListaVazia" />
+      <option name="METHOD_NAME" value="ordenarLista" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Exercicios1Test.somaCom5InteirosPositivos" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Exercicios1Test.ordenarListaNegativos" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="projeto-1" />
       <extension name="coverage">
         <pattern>
@@ -77,17 +92,49 @@
       </extension>
       <option name="PACKAGE_NAME" value="br.com.cwi.reset.projeto1" />
       <option name="MAIN_CLASS_NAME" value="br.com.cwi.reset.projeto1.Exercicios1Test" />
-      <option name="METHOD_NAME" value="somaCom5InteirosPositivos" />
+      <option name="METHOD_NAME" value="ordenarListaNegativos" />
       <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Exercicios1Test.ordenarListaVazia" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="projeto-1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.cwi.reset.projeto1.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.com.cwi.reset.projeto1" />
+      <option name="MAIN_CLASS_NAME" value="br.com.cwi.reset.projeto1.Exercicios1Test" />
+      <option name="METHOD_NAME" value="ordenarListaVazia" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="br.com.cwi.reset.projeto1 in projeto-1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="projeto-1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.cwi.reset.projeto1.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.com.cwi.reset.projeto1" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.Exercicios1Test.mediaComListaVazia" />
+        <item itemvalue="JUnit.Exercicios1Test.ordenarListaNegativos" />
+        <item itemvalue="JUnit.br.com.cwi.reset.projeto1 in projeto-1" />
         <item itemvalue="JUnit.Exercicios1Test" />
-        <item itemvalue="JUnit.Exercicios1Test.somaCom5InteirosPositivos" />
+        <item itemvalue="JUnit.Exercicios1Test.ordenarListaVazia" />
+        <item itemvalue="JUnit.Exercicios1Test.ordenarLista" />
       </list>
     </recent_temporary>
   </component>
@@ -101,5 +148,10 @@
       <updated>1633638706192</updated>
     </task>
     <servers />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/projeto_1$br_com_cwi_reset_projeto1_in_projeto_1.ic" NAME="br.com.cwi.reset.projeto1 in projeto-1 Coverage Results" MODIFIED="1635620072714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>br.com.cwi.reset.projeto1.*</FILTER>
+    </SUITE>
   </component>
 </project>

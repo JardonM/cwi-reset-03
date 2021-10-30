@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TesteExercicios {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ListaVaziaException {
         Exercicios1 exercicio = new Exercicios1();
 
         List<Integer> numeros = Arrays.asList(10, 1564, 200, 120, 15, 12, 144);
